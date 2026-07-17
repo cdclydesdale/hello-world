@@ -5,6 +5,8 @@ const hotels = [
   { name: "City Center Suites", location: "Financial District", price: "$145.00", pool: false },
   { name: "Sunset Valley Lodge", location: "West Hills", price: "$168.00", pool: true },
   { name: "Riverside Budget Hotel", location: "North Riverwalk", price: "$89.00", pool: false },
+  { name: "Cedar Bay Hotel", location: "Marina Quarter", price: "$132.00", pool: true },
+  { name: "Willow Creek Suites", location: "Garden District", price: "$149.00", pool: true },
 ];
 
 export default function Home() {
@@ -13,7 +15,7 @@ export default function Home() {
       <section className="search-summary" aria-labelledby="page-title">
         <p className="eyebrow">Weekend escape</p>
         <h1 id="page-title">Hotel Search Results</h1>
-        <p className="subtitle">6 stays found for your visit to Harbor City</p>
+        <p className="subtitle">8 stays found for your visit to Harbor City</p>
       </section>
 
       <section className="hotel-results" aria-label="Available hotels">
