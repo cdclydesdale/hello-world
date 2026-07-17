@@ -35,6 +35,10 @@ public final class HotelSearchStarter {
 
       System.out.println("The hotel site is open. Press Enter to close Chrome.");
       System.in.read();
+
+      List<String> premiumPoolHotels = findPremiumHotelNames(hotels);
+      System.out.println("Premium hotels with pools: " + premiumPoolHotels);
+      System.in.read();
     } finally {
       driver.quit();
     }
@@ -53,5 +57,17 @@ public final class HotelSearchStarter {
            .toList();
 
     return budgetHotel;
+  }
+
+  private static List<String> findPremiumHotelNames(List<Hotel> scrapedHotels) {
+    // Find all the premium hotel that cost > $200 and has a pool
+
+    List<String> premiumHotel = scrapedHotels.stream()
+            .filter(Hotel::isHasPool)
+            .filter(h -> h.getHotelPrice() > 200)
+            .map(Hotel::getHotelName)
+            .toList();
+
+    return premiumHotel;
   }
 }
