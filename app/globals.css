@@ -48,6 +48,52 @@ h1 {
   font-size: 16px;
 }
 
+.hotel-filters {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0 0 18px;
+  padding: 14px 16px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.pool-filter, .sort-filter {
+  display: flex;
+  align-items: center;
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.pool-filter { gap: 9px; cursor: pointer; }
+
+.pool-filter input {
+  width: 17px;
+  height: 17px;
+  margin: 0;
+  accent-color: var(--teal);
+}
+
+.sort-filter { gap: 10px; }
+
+.sort-filter select {
+  min-height: 36px;
+  padding: 0 32px 0 10px;
+  background: #fff;
+  border: 1px solid #bdc8d4;
+  border-radius: 8px;
+  color: var(--ink);
+  font: inherit;
+}
+
+.sort-filter select:focus-visible, .pool-filter input:focus-visible {
+  outline: 3px solid rgba(8, 125, 125, .25);
+  outline-offset: 2px;
+}
+
 .hotel-results { display: grid; gap: 14px; }
 
 .hotel-listing {
@@ -94,6 +140,8 @@ h1 {
 
 @media (max-width: 620px) {
   .page-shell { width: min(100% - 28px, 960px); padding: 44px 0; }
+  .hotel-filters { align-items: flex-start; flex-direction: column; }
+  .sort-filter { justify-content: space-between; width: 100%; }
   .hotel-listing { align-items: flex-start; flex-direction: column; gap: 18px; padding: 22px; }
   .hotel-meta { width: 100%; justify-content: space-between; }
   .price-block { min-width: 0; }
