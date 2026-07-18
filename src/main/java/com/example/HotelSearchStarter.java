@@ -1,7 +1,11 @@
 package com.example;
 
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
@@ -33,12 +37,17 @@ public final class HotelSearchStarter {
       List<String> budgetPoolHotelNames = findBudgetPoolHotelNames(hotels);
       System.out.println("Budget hotels with pools: " + budgetPoolHotelNames);
 
+      List<String> premiumPoolHotels = findPremiumHotelNames(hotels);
+      System.out.println("Premium hotels with pools: " + premiumPoolHotels);
+
+      List<String> sortedPoolHotels = sortHotelByPrice(hotels);
+      System.out.println("Sorted hotels with pools: " + sortedPoolHotels);
+
+      listHotelsWithPools(hotels);
+
       System.out.println("The hotel site is open. Press Enter to close Chrome.");
       System.in.read();
 
-      List<String> premiumPoolHotels = findPremiumHotelNames(hotels);
-      System.out.println("Premium hotels with pools: " + premiumPoolHotels);
-      System.in.read();
     } finally {
       driver.quit();
     }
@@ -69,5 +78,29 @@ public final class HotelSearchStarter {
             .toList();
 
     return premiumHotel;
+  }
+
+  private static List<String> sortHotelByPrice(List<Hotel> scrapedHotels) {
+    //Find all the Hotels that have a pool and sort them by price
+    List<String> sortedHotel = scrapedHotels.stream()
+            .filter(Hotel::isHasPool)
+            .sorted(Comparator.comparingDouble(Hotel::getHotelPrice))
+            .map(Hotel::getHotelName)
+            .toList();
+
+    return sortedHotel;
+  }
+
+  private static void listHotelsWithPools(List<Hotel> scrapedHotels) {
+    Map<Boolean, List<String>> poolSplit = scrapedHotels.stream()
+        .collect(Collectors.partitioningBy(
+            Hotel::isHasPool,
+            Collectors.mapping(Hotel::getHotelName, Collectors.toList())));
+
+    List<String> hotelsHasPool = poolSplit.getOrDefault(Boolean.TRUE, List.of());
+    List<String> hotelsDoesNotHavePool = poolSplit.getOrDefault(Boolean.FALSE, List.of());
+
+    System.out.println("Hotels that have a pool: " + hotelsHasPool);
+    System.out.println("Hotels that do not have a pool: " + hotelsDoesNotHavePool);
   }
 }
